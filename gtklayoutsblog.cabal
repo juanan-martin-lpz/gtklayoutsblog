@@ -33,7 +33,9 @@ executable gtklayoutsblog-exe
 
   build-depends:
       base
+    , transformers
+    , text
     , haskell-gi-base
     , gi-gtk
-    
+
   default-language: Haskell2010
