@@ -1,0 +1,39 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: e09481c89c8850c389734a83242feb010aefb084270d871b3a12b28cc5b33ff7
+
+name:           gtklayoutsblog
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/gtklayoutsblog#readme>
+homepage:       https://github.com/githubuser/gtklayoutsblog#readme
+bug-reports:    https://github.com/githubuser/gtklayoutsblog/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2020 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+
+
+executable gtklayoutsblog-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_gtklayoutsblog
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -optl-mwindows -with-rtsopts=-N
+
+  build-depends:
+      base
+    , haskell-gi-base
+    , gi-gtk
+    
+  default-language: Haskell2010
