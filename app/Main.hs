@@ -8,6 +8,7 @@ module Main where
     import Data.GI.Base
     import Data.Text
     import Control.Monad.IO.Class
+    import GHC.Int
 
     -- creamos la ventana
     createWindow ::  MonadIO m => Text -> m Gtk.Window
@@ -16,9 +17,13 @@ module Main where
         liftIO $ return win
 
     -- creamos un Box
-    createBox :: MonadIO m => Enums.Orientation -> m Gtk.Box
-    createBox orientation = do
-        box <- new Gtk.Box [ #orientation := orientation]
+    createBox :: MonadIO m => Enums.Orientation -> Int32 -> m Gtk.Box
+    createBox orientation spacing = do
+        box <-  if orientation == Enums.OrientationHorizontal then
+                    new Gtk.Box [ #orientation := orientation, #spacing := spacing, #hexpand := True ]
+                else
+                    new Gtk.Box [ #orientation := orientation, #spacing := spacing, #vexpand := True, #hexpand := True ]
+            
         liftIO $ return box   
     
     -- creamos componentes
@@ -35,13 +40,14 @@ module Main where
 
     createButtons :: MonadIO m => Gtk.Box -> m Gtk.Box
     createButtons box = do
-        aceptar <- new Gtk.Button [ #label := "Aceptar"]
-        cancelar <- new Gtk.Button [ #label := "Cancelar"]
+        Gtk.setWidgetHalign box Enums.AlignEnd
+
+        aceptar <- new Gtk.Button [ #label := "Aceptar", #margin := 10 ]
+        cancelar <- new Gtk.Button [ #label := "Cancelar", #margin := 10 ]
 
         #add box aceptar
         #add box cancelar
         liftIO $ return box
-
 
     main :: IO ()
     main = do
@@ -50,9 +56,9 @@ module Main where
         win <- createWindow "Layouts Sample"
         on win #destroy Gtk.mainQuit
 
-        box <- createBox Enums.OrientationVertical
-        createBox Enums.OrientationVertical >>= createInputArea >>= #add box
-        createBox Enums.OrientationHorizontal >>= createButtons >>= #add box
+        box <- createBox Enums.OrientationVertical 10
+        createBox Enums.OrientationVertical 10 >>= createInputArea >>= #add box
+        createBox Enums.OrientationHorizontal 10 >>= createButtons >>= #add box
 
         #add win box
 
